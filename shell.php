@@ -65,11 +65,11 @@ function executeCommand(string $command) {
     
     } else if(function_exists('passthru')) {
         
-        # https://www.php.net/manual/en/function.passthru.php
-		ob_start();
-		passthru($command , $return_var);
-		$output = ob_get_contents();
-		ob_end_clean();
+       # https://www.php.net/manual/en/function.passthru.php
+       ob_start();
+       passthru($command , $return_var);
+       $output = ob_get_contents();
+       ob_end_clean();
 
     } else if(function_exists('system')){
 
